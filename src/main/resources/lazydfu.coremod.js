@@ -6,8 +6,8 @@ function initializeCoreMod() {
         'createFixerUpper': {
             'target': {
                 'type': 'METHOD',
-                'class': 'net.minecraft.util.datafix.DataFixesManager',
-                'methodName': 'func_188279_a',
+                'class': 'net.minecraft.util.datafix.DataFixers',
+                'methodName': 'm_14529_',
                 'methodDesc': '()Lcom/mojang/datafixers/DataFixer;'
             },
             'transformer': createFixerUpper
