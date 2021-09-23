@@ -1,17 +1,12 @@
-# User-specific stuff
-.idea/
+# GradleWorks for ForgeGradle 5
+# Written by Jonathing
+# Version 4.0.0-beta.2
+#
+# This .gitignore file is a template that can be used for any Minecraft Forge mod workspace.
+# If you want to change something specific, feel free to!
 
-*.iml
-*.ipr
-*.iws
 
-# IntelliJ
-out/
-# mpeltonen/sbt-idea plugin
-.idea_modules/
-
-# JIRA plugin
-atlassian-ide-plugin.xml
+## Java
 
 # Compiled class file
 *.class
@@ -22,6 +17,9 @@ atlassian-ide-plugin.xml
 # BlueJ files
 *.ctxt
 
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
 # Package Files #
 *.jar
 *.war
@@ -31,49 +29,97 @@ atlassian-ide-plugin.xml
 *.tar.gz
 *.rar
 
+# Libraries
+!libs/*
+
+
+## Gradle
+
+.gradle
+**/build/
+!src/**/build/
+
+# Ignore Gradle GUI config
+gradle-app.setting
+
+# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+!gradle-wrapper.jar
+
+# Cache of project
+.gradletasknamecache
+
+
+## Minecraft Forge
+
+# ForgeGradle
+run/
+eclipse/
+
+# MixinGradle Eclipse logs
+/logs/
+
+# TestMaven repo folder
+mcmodsrepo/
+
+
+## IntelliJ IDEA
+
+# Basic project files
+.idea
+*.iml
+*.ipr
+
+# File-based project format
+*.iws
+
+# Compiler output
+out/
+
+
+## Eclipse
+
+.metadata
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.settings/
+.loadpath
+.classpath
+
+# External tool builders
+.externalToolBuilders/
+
+# Locally stored "Eclipse launch configurations"
+*.launch
+
+# Java annotation processor (APT)
+.factorypath
+
+# Code Recommenders
+.recommenders/
+
+# Annotation Processing
+.apt_generated/
+.apt_generated_test/
+
+# Project description file
+.project
+
+
+## Other
+
+# Java Keystores
+*.jks
+
+
+## Windows
+
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
-
-*~
-
-# temporary files which can be created if a process still has a handle open of a deleted file
-.fuse_hidden*
-
-# KDE directory preferences
-.directory
-
-# Linux trash folder which might appear on any partition or disk
-.Trash-*
-
-# .nfs files are created when an open file is removed but is still being accessed
-.nfs*
-
-# General
-.DS_Store
-.AppleDouble
-.LSOverride
-
-# Icon must end with two \r
-Icon
-
-# Thumbnails
-._*
-
-# Files that might appear in the root of a volume
-.DocumentRevisions-V100
-.fseventsd
-.Spotlight-V100
-.TemporaryItems
-.Trashes
-.VolumeIcon.icns
-.com.apple.timemachine.donotpresent
-
-# Directories potentially created on remote AFP share
-.AppleDB
-.AppleDesktop
-Network Trash Folder
-Temporary Items
-.apdisk
 
 # Windows thumbnail cache files
 Thumbs.db
@@ -100,19 +146,50 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-.gradle
-build/
 
-# Ignore Gradle GUI config
-gradle-app.setting
+## macOS
 
-# Cache of project
-.gradletasknamecache
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
 
-**/build/
+# Icon must end with two \r
+Icon
 
-# Common working directory
-run/
 
-# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
-!gradle-wrapper.jar
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+
+## Linux
+
+*~
+
+# temporary files which can be created if a process still has a handle open of a deleted file
+.fuse_hidden*
+
+# KDE directory preferences
+.directory
+
+# Linux trash folder which might appear on any partition or disk
+.Trash-*
+
+# .nfs files are created when an open file is removed but is still being accessed
+.nfs*
