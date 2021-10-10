@@ -1,7 +1,7 @@
 /*
  * GradleWorks for ForgeGradle 5
  * Written by Jonathing
- * Version 4.0.0-beta.2
+ * Version 4.0.0-beta.3
  *
  * What was once just an effort to make life easier is now a fully-fledged buildscript that does almost all of the work
  * for you! The only things you will need to take care of yourself are dependencies, but that shouldn't be too big of a
@@ -52,7 +52,7 @@ buildscript {
         classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
 
         // SpongePowered MixinGradle
-        classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
+        classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7.+', changing: true
 
         // ParchmentMC Librarian
         classpath group: 'org.parchmentmc', name: 'librarian', version: '1.+', changing: true
@@ -61,7 +61,7 @@ buildscript {
 
 println('GradleWorks for ForgeGradle 5')
 println('Written by Jonathing')
-println('Version 4.0.0-beta.2')
+println('Version 4.0.0-beta.3')
 
 // ForgeGradle - The heart and soul of the buildscript and the development environment.
 apply plugin: 'net.minecraftforge.gradle'
@@ -82,7 +82,8 @@ apply plugin: 'signing'
 // Maven Publishing - Used to be able to publish to maven repositories.
 apply plugin: 'maven-publish'
 
-// Gets a file from a parent directory and folder/file names
+// Gets a file from a parent directory and folder/file names.
+// Accounts for windows backslashes because I'm paranoid as hell.
 File getFile(File parent, String... paths) {
     StringBuilder builder = new StringBuilder()
     builder.append(parent)
@@ -94,14 +95,14 @@ File getFile(File parent, String... paths) {
     return file(builder.toString().replace('/', isWindows() ? '\\' : '/'))
 }
 
-// Get the mod version from gradle.properties
+// Get the mod version from gradle.properties.
 version = mod_version
-// Get the mod group from gradle.properties
+// Get the mod group from gradle.properties.
 group = mod_group
 // Get the archives base name from the mod id and the Minecraft version.
 archivesBaseName = String.format('%s-%s', mod_id, mc_version)
 
-// this variable points to where the latest built file is placed for usage in publish.gradle
+// this variable points to where the latest built file is placed for usage in publish.gradle.
 project.ext.reobfFile = getFile(buildDir, 'libs', "${archivesBaseName}-${version}.jar".toString())
 
 // This file contains additional instructions for signing builds of this mod (see the file for more details).
@@ -147,7 +148,8 @@ minecraft {
     // Mappings to use for the project. See default MDK for mappings instructions.
     mappings channel: mappings_channel, version: mappings_version
 
-    // Access Transformer
+    // The access transformer file for the project.
+    // GradleWorks only tells ModDev we're using an AT if the file exists. If you don't need it, don't make it.
     File atFile = getFile(projectDir, 'src', 'main', 'resources', 'META-INF', 'accesstransformer.cfg')
     if (atFile.exists()) {
         accessTransformer = atFile
@@ -157,99 +159,47 @@ minecraft {
     runs {
         // All run configurations
         all {
+            // Process non-mod libraries for 1.17.1.
             lazyToken('minecraft_classpath') {
                 configurations.library.copyRecursive().resolve().collect { it.absolutePath }.join(File.pathSeparator)
             }
+
+            // The directory for Minecraft to run in.
+            workingDirectory getFile(projectDir, 'run')
+
+            // Logging markers for Forge. See default MDK for instructions.
+            property 'forge.logging.markers', 'REGISTRIES'
+
+            // Console logging level (debug by info, change to debug if you need debug logging).
+            property 'forge.logging.console.level', 'info'
+
+            // Tells the mod if it is running in an IDE (must be configured in your project, but not required).
+            property "${mod_id}.iside".toString(), 'true'
+
+            // Add the mod's main source set to the total mods in the run configuration.
+            ModConfig modConfig = new ModConfig(project, mod_id)
+            modConfig.source(sourceSets.main)
+            mods.add(modConfig)
         }
 
         // Client run configuration
         client {
-            // The directory for Minecraft to run in
-            workingDirectory getFile(projectDir, 'run')
-
-            // Enable mixins if installed
-            if (isUsingMixin()) {
-                arg "-mixin.config=${mod_id}.mixins.json".toString()
-            }
-
-            // Remaps refmaps to workspace mappings for mixin
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', getFile(buildDir, 'createSrgToMcp', 'output.srg')
-
-            // Logging markers for Forge. See default MDK for instructions
-            property 'forge.logging.markers', 'REGISTRIES'
-
-            // Console logging level (debug by info, change to debug if you need debug logging)
-            property 'forge.logging.console.level', 'info'
-
-            // Tells the mod if it is running in an IDE (must be configured in your project, but not required)
-            property "${mod_id}.iside".toString(), 'true'
-
-            // Add the mod's main source set to the total mods in the run configuration
-            ModConfig modConfig = new ModConfig(project, mod_id)
-            modConfig.source(sourceSets.main)
-            mods.add(modConfig)
+            // The client run configuration does not need any additional properties.
+            // All of them are defined in the "all" closure. If you'd like to add some of your own, feel free.
         }
 
         // Server run configuration
         server {
-            // The directory for Minecraft to run in
-            workingDirectory getFile(projectDir, 'run')
-
-            // Enable mixins if installed
-            if (isUsingMixin()) {
-                arg "-mixin.config=${mod_id}.mixins.json".toString()
-            }
-
-            // Additional arguments exclusive to the server (nogui by default, separated by ",")
+            // Additional arguments exclusive to the server (nogui by default, separated by ",").
             args 'nogui'
-
-            // Remaps refmaps to workspace mappings for mixin
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', getFile(buildDir, 'createSrgToMcp', 'output.srg')
-
-            // Logging markers for Forge. See default MDK for instructions
-            property 'forge.logging.markers', 'REGISTRIES'
-
-            // Console logging level (debug by info, change to debug if you need debug logging)
-            property 'forge.logging.console.level', 'info'
-
-            // Tells the mod if it is running in an IDE (must be configured in your project, but not required)
-            property "${mod_id}.iside".toString(), 'true'
-
-            // Add the mod's main source set to the total mods in the run configuration
-            ModConfig modConfig = new ModConfig(project, mod_id)
-            modConfig.source(sourceSets.main)
-            mods.add(modConfig)
         }
 
         // Data run configuration
         data {
-            // The directory for Minecraft to run in
-            workingDirectory getFile(projectDir, 'run')
-
-            // Enable mixins if installed
-            if (isUsingMixin()) {
-                arg "-mixin.config=${mod_id}.mixins.json".toString()
-            }
-
-            // Additional arguments exclusive to data generation (do NOT change these unless necessary)
+            // Additional arguments exclusive to data generation (do NOT change these unless necessary).
             args '--mod', mod_id, '--all', '--output', getFile(projectDir, 'src', 'generated', 'resources'), '--existing', getFile(projectDir, 'src', 'main', 'resources')
 
-            // Remaps refmaps to workspace mappings for mixin
-            property 'mixin.env.remapRefMap', 'true'
-            property 'mixin.env.refMapRemappingFile', getFile(buildDir, 'createSrgToMcp', 'output.srg')
-
-            // Logging markers for Forge. See default MDK for instructions
-            property 'forge.logging.markers', 'REGISTRIES'
-
-            // Console logging level (debug by info, change to debug if you need debug logging)
-            property 'forge.logging.console.level', 'info'
-
-            // Tells the mod if it is running in an IDE (must be configured in your project, but not required)
-            property "${mod_id}.iside".toString(), 'true'
-
-            // Tells the mod if it is running datagen (must be configured in your project, but not required)
+            // Tells the mod if it is running datagen (must be configured in your project, but not required).
             property "${mod_id}.datagen".toString(), 'true'
 
             // Workaround for https://github.com/MinecraftForge/ForgeGradle/issues/690
@@ -257,33 +207,37 @@ minecraft {
             if (isMacOS()) {
                 jvmArg('-XstartOnFirstThread')
             }
-
-            // Add the mod's main source set to the total mods in the run configuration
-            ModConfig modConfig = new ModConfig(project, mod_id)
-            modConfig.source(sourceSets.main)
-            mods.add(modConfig)
         }
     }
 }
 
+// Additional settings for the resources source set.
 sourceSets.main.resources {
     // Include resources generated by data generators.
     srcDir getFile(projectDir, 'src', 'generated', 'resources')
 }
 
-// Ensure the reference map is included in the source sets
 if (isUsingMixin()) {
+    // MixinGradle settings
     mixin {
+        // Add the refmap to the built JAR file.
         add sourceSets.main, "${mod_id}.refmap.json".toString()
+
+        // Add the mixin config JSON file to run configs and the built JAR's Manifest.
+        config "${mod_id}.mixins.json".toString()
+
+        // Enable debug logging for mixins in the run configs.
+        debug.export = true
     }
 }
 
+// Additional configuration for non-mod dependencies.
 configurations {
-    library // Library dependencies that aren't mods
+    library
     implementation.extendsFrom(library)
 }
 
-// Dependencies to use in this project
+// Dependencies to use in this project.
 dependencies {
     // Minecraft Forge
     String toolchain = 'forge'
@@ -304,30 +258,17 @@ dependencies {
     }
 }
 
-// Attributes to include in the built jar file
+// Attributes to include in the built jar file.
 jar {
     manifest {
-        if (isUsingMixin()) {
-            attributes([
-                    'Specification-Title'     : mod_id,
-                    'Specification-Vendor'    : mod_author,
-                    'Specification-Version'   : '1',
-                    'Implementation-Title'    : project.name,
-                    'Implementation-Version'  : archiveVersion.getOrElse(version),
-                    'Implementation-Vendor'   : mod_author,
-                    'Implementation-Timestamp': new Date().format('yyyy-MM-dd\'T\'HH:mm:ssZ'),
-                    'MixinConfigs'            : "${mod_id}.mixins.json".toString()
-            ])
-        } else {
-            attributes([
-                    'Specification-Title'     : mod_id,
-                    'Specification-Vendor'    : mod_author,
-                    'Specification-Version'   : '1',
-                    'Implementation-Title'    : project.name,
-                    'Implementation-Version'  : archiveVersion.getOrElse(version),
-                    'Implementation-Vendor'   : mod_author,
-                    'Implementation-Timestamp': new Date().format('yyyy-MM-dd\'T\'HH:mm:ssZ')
-            ])
-        }
+        attributes([
+                'Specification-Title'     : mod_id,
+                'Specification-Vendor'    : mod_author,
+                'Specification-Version'   : '1',
+                'Implementation-Title'    : project.name,
+                'Implementation-Version'  : archiveVersion.getOrElse(version),
+                'Implementation-Vendor'   : mod_author,
+                'Implementation-Timestamp': new Date().format('yyyy-MM-dd\'T\'HH:mm:ssZ')
+        ])
     }
 }
