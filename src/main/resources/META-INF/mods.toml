@@ -12,3 +12,17 @@ logoFile = "icon.png"
 credits = "Original mod by tuxed. Initial port to Forge by CorgiTaco."
 authors = "Jonathing"
 description = '''LazyDFU is an optimization mod that makes the initialization of DataFixerUpper "lazy" - that is, it will not immediately create the rules required to migrate data from older versions of Minecraft to newer versions until it actually needs to do so. It does not modify DFU and should be safe, but do exercise more than the usual caution.'''
+
+[[dependencies.lazydfu]]
+modId = "forge"
+mandatory = true
+versionRange = "[28.0.75,37.0.0)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.lazydfu]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.14.4,1.17)"
+ordering = "NONE"
+side = "BOTH"
