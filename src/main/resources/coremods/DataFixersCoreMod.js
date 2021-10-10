@@ -58,7 +58,7 @@ function createFixerUpper(method) {
         ASMAPI.log('FATAL', '[LazyDFU] This usually means another mod is trying to kill or modify the data fixer initialization system.')
         ASMAPI.log('FATAL', '[LazyDFU] Please avoid using mods alongside LazyDFU that do this such as DataBreaker, DataFixerSlayer, or RandomPatches\'s data fixer disabler.')
     } else {
-        ASMAPI.log('FATAL', '[LazyDFU]  LazyDFU seems to have been initialized successfully, but something seems off.')
+        ASMAPI.log('FATAL', '[LazyDFU] LazyDFU seems to have been initialized successfully, but something seems off.')
         ASMAPI.log('FATAL', '[LazyDFU] It seems like more than one DataFixerBuilder was transformed in the method, which should be impossible.')
         ASMAPI.log('FATAL', '[LazyDFU] In any case, please avoid using mods alongside LazyDFU that do this such as DataBreaker, DataFixerSlayer, or RandomPatches\'s data fixer disabler.')
     }
