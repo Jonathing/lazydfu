@@ -1,20 +1,19 @@
 // class imports
-var Opcodes = Java.type('org.objectweb.asm.Opcodes');
+var ASMAPI = Java.type('net.minecraftforge.coremod.api.ASMAPI')
+var Opcodes = Java.type('org.objectweb.asm.Opcodes')
 
 /**
- * The DataFixers coremod hooks into the Entity class and injects the ASM bytecode presented in the transformers
- * returned by this method.
+ * The DataFixersCoreMod coremod hooks into the DataFixesManager class and injects the ASM bytecode presented in the
+ * transformers returned by this method.
  *
- * @returns {{createFixerUpper: {transformer: (function(*): *), target: {methodDesc: string, methodName: string, type: string, class: string}}}}
+ * @returns {{createFixer: {transformer: (function(*=): *), target: {type: string, class: string}}}}
  */
 function initializeCoreMod() {
     return {
         'createFixer': {
             'target': {
-                'type': 'METHOD',
-                'class': 'net.minecraft.util.datafix.DataFixesManager',
-                'methodName': 'func_188279_a',
-                'methodDesc': '()Lcom/mojang/datafixers/DataFixer;'
+                'type': 'CLASS',
+                'name': 'net.minecraft.util.datafix.DataFixesManager'
             },
             'transformer': createFixer
         }
@@ -22,14 +21,16 @@ function initializeCoreMod() {
 }
 
 /**
- * This function transforms the createFixer() method to change all calls of "new DataFixerBuilder()" to "new
- * LazyDataFixerBuilder()". This way, the lazy data fixer is used rather than the original one when it is attempted to
- * be created.
+ * This function transforms the createFixer() method in the given class to change all calls of "new DataFixerBuilder()"
+ * to "new LazyDataFixerBuilder()". This way, the lazy data fixer is used rather than the original one when it is
+ * attempted to be created.
  *
- * @param method The createFixer() method's bytecode that will be transformed by this coremod.
- * @returns {*} The transformed method.
+ * @param clazz The DataFixesManager class's bytecode that will be transformed by this coremod.
+ * @returns {*} The transformed class.
  */
-function createFixer(method) {
+function createFixer(clazz) {
+    var method = getMethod(clazz, ASMAPI.mapMethod("func_188279_a"))
+
     var i
     var newCount = 0
     var invokeCount = 0
@@ -62,5 +63,16 @@ function createFixer(method) {
         print('[LazyDFU] In any case, please avoid using mods alongside LazyDFU that do this such as DataBreaker, DataFixerSlayer, or RandomPatches\'s data fixer disabler.')
     }
 
-    return method;
+    return clazz
+}
+
+function getMethod(clazz, name) {
+    for (var index in clazz.methods) {
+        var method = clazz.methods[index]
+        if (method.name.equals(name)) {
+            return method
+        }
+    }
+
+    throw "[LazyDFU] Couldn't find method with name '" + name + "' in '" + clazz.name + "'!"
 }
