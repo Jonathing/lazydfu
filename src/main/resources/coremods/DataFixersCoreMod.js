@@ -10,27 +10,27 @@ var Opcodes = Java.type('org.objectweb.asm.Opcodes');
  */
 function initializeCoreMod() {
     return {
-        'createFixerUpper': {
+        'createFixer': {
             'target': {
                 'type': 'METHOD',
-                'class': 'net.minecraft.util.datafix.DataFixers',
-                'methodName': 'm_14529_',
+                'class': 'net.minecraft.util.datafix.DataFixesManager',
+                'methodName': 'func_188279_a',
                 'methodDesc': '()Lcom/mojang/datafixers/DataFixer;'
             },
-            'transformer': createFixerUpper
+            'transformer': createFixer
         }
     }
 }
 
 /**
- * This function transforms the createFixerUpper() method to change all calls of "new DataFixerBuilder()" to "new
+ * This function transforms the createFixer() method to change all calls of "new DataFixerBuilder()" to "new
  * LazyDataFixerBuilder()". This way, the lazy data fixer is used rather than the original one when it is attempted to
  * be created.
  *
- * @param method The createFixerUpper() method's bytecode that will be transformed by this coremod.
+ * @param method The createFixer() method's bytecode that will be transformed by this coremod.
  * @returns {*} The transformed method.
  */
-function createFixerUpper(method) {
+function createFixer(method) {
     var i
     var newCount = 0
     var invokeCount = 0
