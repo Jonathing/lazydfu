@@ -2,6 +2,12 @@
 var ASMAPI = Java.type('net.minecraftforge.coremod.api.ASMAPI')
 var Opcodes = Java.type('org.objectweb.asm.Opcodes');
 
+/**
+ * The DataFixers coremod hooks into the Entity class and injects the ASM bytecode presented in the transformers
+ * returned by this method.
+ *
+ * @returns {{createFixerUpper: {transformer: (function(*): *), target: {methodDesc: string, methodName: string, type: string, class: string}}}}
+ */
 function initializeCoreMod() {
     return {
         'createFixerUpper': {
@@ -16,7 +22,14 @@ function initializeCoreMod() {
     }
 }
 
-// Change all calls of "new DataFixerBuilder()" to "new LazyDataFixerBuilder()"
+/**
+ * This function transforms the createFixerUpper() method to change all calls of "new DataFixerBuilder()" to "new
+ * LazyDataFixerBuilder()". This way, the lazy data fixer is used rather than the original one when it is attempted to
+ * be created.
+ *
+ * @param method The createFixerUpper() method's bytecode that will be transformed by this coremod.
+ * @returns {*} The transformed method.
+ */
 function createFixerUpper(method) {
     var i
     var newCount = 0
