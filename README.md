@@ -1,49 +1,19 @@
 # LazyDFU
 
-LazyDFU is an optimization mod that makes the initialization of DataFixerUpper "lazy" - that is, it
-will not immediately create the rules required to migrate data from older versions of Minecraft to
-newer versions until it actually needs to do so. It does not modify DFU and should be safe, but do
-exercise more than the usual caution.
+LazyDFU makes the DFU lazy, blah blah blah. You probably already know what it is if you found this fork.
 
-The premise of LazyDFU is simple: most of the time, you will not need to convert data for every version
-of the game. As a result, DFU rule compilation occurs later, when the game is already up and running.
-This means it is possible you may see lag spikes if LazyDFU forces the game to compile migration rules,
-but once complete there is no performance penalty.
+Here's where you'll probably want to be if you're here by accident:
 
-## Give me the numbers!
+- [Original LazyDFU mod for Fabric by tuxed](https://github.com/astei/lazydfu)
+- [CorgiTaco's Forge port of LazyDFU](https://github.com/CorgiTaco/lazydfu)
 
-On an i5-8250U laptop:
+## Fork by Jonathing
 
-* Vanilla: ~58 seconds spent initializing DFU and compiling DFU rules
-* LazyDFU: 498 **milliseconds** spent initializing DFU
+I made this fork of the Forge port because I thought it could use some cleaning up, and before the 1.17.1 update existed for CorgiTaco's fork, I had updated it to 1.17.1 myself. Unfortunately my PR into his repo never got any sort of reply, so I closed it and am now maintaining this fork on my own. It won't be on CurseForge, but every release will be in the GitHub Releases page which is probably on the right side of the webpage.
 
-This results in a smooth, responsive game startup.
+Here's what you'll need to know
 
-## I want to see to believe it!
+- The 1.17.1 file is for Minecraft 1.17.1 and above. It should hopefully work for versions above 1.17.1 as well. It also works with FMLOnly since it's only a single coremod, which is pretty nifty.
+- The 1.14.4 file is for Minecraft 1.14.4 all the way through 1.16.5. It's a single coremod with no API functionality whatsoever so it should just work.
 
-[Here's a video I recorded](https://www.youtube.com/watch?v=gXDqJ598kKA).
-
-## Comparing it to other mods
-
-### Cadmium
-
-LazyDFU is complementary to Cadmium. While Cadmium tackles the root source of the problem (rule
-optimization being slow), it only partially improves the situation. LazyDFU will still be highly
-effective by deferring the initial compilation of DFU rules until needed, so the game will start
-up much more quickly.
-
-### Smooth Boot
-
-LazyDFU takes a similar implementation approach to Smooth Boot: both mods do not try to modify DFU.
-However, LazyDFU is superior to Smooth Boot as it does not compile DFU rules at all, which is the most
-expensive part of the game startup process.
-
-In comparison, Smooth Boot will instead limit the number of threads that compile DFU rules and run them
-at a lower priority.
-
-### DataBreaker
-
-**DataBreaker is fundamentally unsafe**. If you load an older world with DataBreaker then **it will corrupt
-that world**. There's some safeguards in DataBreaker, but even the author does not recommend using DataBreaker.
-In comparison, with LazyDFU you may experience a nasty lag spike instead, which is vastly superior to having a
-completely hosed world. So prefer LazyDFU over DataBreaker :)
+That's all. Now shoo.
