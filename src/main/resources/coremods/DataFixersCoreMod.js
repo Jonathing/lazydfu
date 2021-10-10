@@ -2,8 +2,8 @@
 var Opcodes = Java.type('org.objectweb.asm.Opcodes');
 
 /**
- * The DataFixers coremod hooks into the Entity class and injects the ASM bytecode presented in the transformers
- * returned by this method.
+ * The DataFixers coremod hooks into the DataFixesManager class and injects the ASM bytecode presented in the
+ * transformers returned by this method.
  *
  * @returns {{createFixerUpper: {transformer: (function(*): *), target: {methodDesc: string, methodName: string, type: string, class: string}}}}
  */
