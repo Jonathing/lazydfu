@@ -16,7 +16,7 @@ description = '''LazyDFU is an optimization mod that makes the initialization of
 [[dependencies.lazydfu]]
 modId = "forge"
 mandatory = true
-versionRange = "[25.0.199,27.0.16)"
+versionRange = "[25.0.198,27.0.16)"
 ordering = "NONE"
 side = "BOTH"
 
