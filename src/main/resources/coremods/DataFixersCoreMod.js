@@ -51,16 +51,16 @@ function createFixer(clazz) {
 
     // finish up
     if (newCount == 1 && invokeCount == 1) {
-        print('[LazyDFU] LazyDFU was initialized successfully.')
+        log('INFO', '[LazyDFU] LazyDFU was initialized successfully.')
     } else if (newCount == 0 || invokeCount == 0) {
-        print('[LazyDFU] LazyDFU seems to have been initialized successfully, but something seems off.')
-        print('[LazyDFU] Any variable trying to create a normal DataFixerBuilder did not exist at the time of method transformation.')
-        print('[LazyDFU] This usually means another mod is trying to kill or modify the data fixer initialization system.')
-        print('[LazyDFU] Please avoid using mods alongside LazyDFU that do this such as DataBreaker, DataFixerSlayer, or RandomPatches\'s data fixer disabler.')
+        log('FATAL', '[LazyDFU] LazyDFU seems to have been initialized successfully, but something seems off.')
+        log('FATAL', '[LazyDFU] Any variable trying to create a normal DataFixerBuilder did not exist at the time of method transformation.')
+        log('FATAL', '[LazyDFU] This usually means another mod is trying to kill or modify the data fixer initialization system.')
+        log('FATAL', '[LazyDFU] Please avoid using mods alongside LazyDFU that do this such as DataBreaker, DataFixerSlayer, or RandomPatches\'s data fixer disabler.')
     } else {
-        print('[LazyDFU] LazyDFU seems to have been initialized successfully, but something seems off.')
-        print('[LazyDFU] It seems like more than one DataFixerBuilder was transformed in the method, which should be impossible.')
-        print('[LazyDFU] In any case, please avoid using mods alongside LazyDFU that do this such as DataBreaker, DataFixerSlayer, or RandomPatches\'s data fixer disabler.')
+        log('FATAL', '[LazyDFU] LazyDFU seems to have been initialized successfully, but something seems off.')
+        log('FATAL', '[LazyDFU] It seems like more than one DataFixerBuilder was transformed in the method, which should be impossible.')
+        log('FATAL', '[LazyDFU] In any case, please avoid using mods alongside LazyDFU that do this such as DataBreaker, DataFixerSlayer, or RandomPatches\'s data fixer disabler.')
     }
 
     return clazz
@@ -75,4 +75,12 @@ function getMethod(clazz, name) {
     }
 
     throw "[LazyDFU] Couldn't find method with name '" + name + "' in '" + clazz.name + "'!"
+}
+
+function log(level, message) {
+    try {
+        ASMAPI.log(level, message)
+    } catch (error) {
+        print(message)
+    }
 }
