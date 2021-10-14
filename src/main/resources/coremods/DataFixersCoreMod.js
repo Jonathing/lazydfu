@@ -66,6 +66,14 @@ function createFixer(clazz) {
     return clazz
 }
 
+/**
+ * This function attempts to get the MethodNode specified by the given name in the given ClassNode. If no applicable
+ * MethodNode was found, an error will be thrown declaring so.
+ *
+ * @param clazz The ClassNode to get the MethodNode from.
+ * @param name  The name of the method to get the MethodNode for.
+ * @returns {*} The MethodNode that was found in the ClassNode.
+ */
 function getMethod(clazz, name) {
     for (var index in clazz.methods) {
         var method = clazz.methods[index]
@@ -77,6 +85,13 @@ function getMethod(clazz, name) {
     throw "[LazyDFU] Couldn't find method with name '" + name + "' in '" + clazz.name + "'!"
 }
 
+/**
+ * This function logs a message to console. If the ASMAPI.log function exists at runtime, it will use that method. If
+ * not, it will use the standard print() method.
+ *
+ * @param level   The logging level to log to.
+ * @param message The message to log to the console.
+ */
 function log(level, message) {
     try {
         ASMAPI.log(level, message)
