@@ -6,7 +6,7 @@ var Opcodes = Java.type('org.objectweb.asm.Opcodes')
  * The DataFixersCoreMod coremod hooks into the DataFixesManager class and injects the ASM bytecode presented in the
  * transformers returned by this method.
  *
- * @returns {{createFixer: {transformer: (function(*=): *), target: {type: string, class: string}}}}
+ * @returns {{createFixer: {transformer: (function(*=): *), target: {type: string, name: string}}}}
  */
 function initializeCoreMod() {
     return {
@@ -29,27 +29,32 @@ function initializeCoreMod() {
  * @returns {*} The transformed class.
  */
 function createFixer(clazz) {
+    // Get the MethodNode we're trying to inject into.
     var method = getMethod(clazz, ASMAPI.mapMethod("func_188279_a"))
 
+    // Simple count variables for our for loop.
     var i
     var newCount = 0
     var invokeCount = 0
 
+    // Start reading from the head of the MethodNode.
     for (i = 0; i < method.instructions.size(); i++) {
         var insn = method.instructions.get(i)
 
+        // Replace any creations of DataFixerBuilder with LazyDataFixerBuilder.
         if (insn.getOpcode() == Opcodes.NEW && insn.desc.equals('com/mojang/datafixers/DataFixerBuilder')) {
             insn.desc = 'me/steinborn/lazydfu/mod/LazyDataFixerBuilder'
             newCount++
         }
 
+        // Replace any invocations of "new DataFixerBuilder()" with "new LazyDataFixerBuilder()".
         if (insn.getOpcode() == Opcodes.INVOKESPECIAL && insn.owner.equals('com/mojang/datafixers/DataFixerBuilder') && insn.name.equals('<init>')) {
             insn.owner = 'me/steinborn/lazydfu/mod/LazyDataFixerBuilder'
             invokeCount++
         }
     }
 
-    // finish up
+    // Check if anything might've gone wrong early on.
     if (newCount == 1 && invokeCount == 1) {
         log('INFO', '[LazyDFU] LazyDFU was initialized successfully.')
     } else if (newCount == 0 || invokeCount == 0) {
@@ -82,7 +87,7 @@ function getMethod(clazz, name) {
         }
     }
 
-    throw "[LazyDFU] Couldn't find method with name '" + name + "' in '" + clazz.name + "'!"
+    throw "LazyDFU couldn't find method with name '" + name + "' in '" + clazz.name + "'!"
 }
 
 /**
