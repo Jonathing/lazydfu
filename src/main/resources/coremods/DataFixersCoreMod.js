@@ -100,7 +100,7 @@ function getMethod(clazz, name)
         }
     }
 
-    throw "LazyDFU couldn't find method with name '" + name + "' in '" + clazz.name + "'!"
+    throw "DataFixersCoreMod couldn't find method with name '" + name + "' in '" + clazz.name + "'!"
 }
 
 /**
