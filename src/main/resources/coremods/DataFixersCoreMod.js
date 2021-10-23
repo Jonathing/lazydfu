@@ -1,21 +1,20 @@
 // class imports
 var ASMAPI = Java.type('net.minecraftforge.coremod.api.ASMAPI')
-var Opcodes = Java.type('org.objectweb.asm.Opcodes');
+var Opcodes = Java.type('org.objectweb.asm.Opcodes')
+var FieldNode = Java.type('org.objectweb.asm.tree.FieldNode')
 
 /**
  * The DataFixers coremod hooks into the DataFixers class and injects the ASM bytecode presented in the transformers
  * returned by this method.
  *
- * @returns {{createFixerUpper: {transformer: (function(*): *), target: {methodDesc: string, methodName: string, type: string, class: string}}}}
+ * @returns {{createFixerUpper: {transformer: (function(*=): *), target: {name: string, type: string}}}}
  */
 function initializeCoreMod() {
     return {
         'createFixerUpper': {
             'target': {
-                'type': 'METHOD',
-                'class': 'net.minecraft.util.datafix.DataFixers',
-                'methodName': 'm_14529_',
-                'methodDesc': '()Lcom/mojang/datafixers/DataFixer;'
+                'type': 'CLASS',
+                'name': 'net.minecraft.util.datafix.DataFixers'
             },
             'transformer': createFixerUpper
         }
@@ -23,45 +22,70 @@ function initializeCoreMod() {
 }
 
 /**
- * This function transforms the createFixerUpper() method to change all calls of "new DataFixerBuilder()" to "new
- * LazyDataFixerBuilder()". This way, the lazy data fixer is used rather than the original one when it is attempted to
- * be created.
+ * This function mainly transforms the createFixerUpper() method in the given class to change all calls of "new
+ * DataFixerBuilder()" to "new LazyDataFixerBuilder()". This way, the lazy data fixer is used rather than the original
+ * one when it is attempted to be created. In addition, a new field is created in the class which states whether or not
+ * the transformation was successful.
  *
- * @param method The createFixerUpper() method's bytecode that will be transformed by this coremod.
- * @returns {*} The transformed method.
+ * @param clazz The DataFixers class's bytecode that will be transformed by this coremod.
+ * @returns {*} The transformed class.
  */
-function createFixerUpper(method) {
+function createFixerUpper(clazz) {
+    // Get the MethodNode we're trying to inject into.
+    var method = getMethod(clazz, ASMAPI.mapMethod("m_14529_"))
+
+    // Simple count variables for our for loop.
     var i
     var newCount = 0
     var invokeCount = 0
 
-    for (i = 0; i < method.instructions.size(); i++) {
+    // Start reading from the head of the MethodNode.
+    for (i = 0; i < method.instructions.size(); i++)
+    {
         var insn = method.instructions.get(i)
 
-        if (insn.getOpcode() == Opcodes.NEW && insn.desc.equals('com/mojang/datafixers/DataFixerBuilder')) {
+        // Replace any creations of DataFixerBuilder with LazyDataFixerBuilder.
+        if (insn.getOpcode() == Opcodes.NEW && insn.desc.equals('com/mojang/datafixers/DataFixerBuilder'))
+        {
             insn.desc = 'me/steinborn/lazydfu/mod/LazyDataFixerBuilder'
             newCount++
         }
 
-        if (insn.getOpcode() == Opcodes.INVOKESPECIAL && insn.owner.equals('com/mojang/datafixers/DataFixerBuilder') && insn.name.equals('<init>')) {
+        // Replace any invocations of "new DataFixerBuilder()" with "new LazyDataFixerBuilder()".
+        if (insn.getOpcode() == Opcodes.INVOKESPECIAL && insn.owner.equals('com/mojang/datafixers/DataFixerBuilder') && insn.name.equals('<init>'))
+        {
             insn.owner = 'me/steinborn/lazydfu/mod/LazyDataFixerBuilder'
             invokeCount++
         }
     }
 
-    // finish up
-    if (newCount == 1 && invokeCount == 1) {
-        ASMAPI.log('INFO', '[LazyDFU] LazyDFU was initialized successfully.')
-    } else if (newCount == 0 || invokeCount == 0) {
-        ASMAPI.log('FATAL', '[LazyDFU] LazyDFU seems to have been initialized successfully, but something seems off.')
-        ASMAPI.log('FATAL', '[LazyDFU] Any variable trying to create a normal DataFixerBuilder did not exist at the time of method transformation.')
-        ASMAPI.log('FATAL', '[LazyDFU] This usually means another mod is trying to kill or modify the data fixer initialization system.')
-        ASMAPI.log('FATAL', '[LazyDFU] Please avoid using mods alongside LazyDFU that do this such as DataBreaker, DataFixerSlayer, or RandomPatches\'s data fixer disabler.')
-    } else {
-        ASMAPI.log('FATAL', '[LazyDFU] LazyDFU seems to have been initialized successfully, but something seems off.')
-        ASMAPI.log('FATAL', '[LazyDFU] It seems like more than one DataFixerBuilder was transformed in the method, which should be impossible.')
-        ASMAPI.log('FATAL', '[LazyDFU] In any case, please avoid using mods alongside LazyDFU that do this such as DataBreaker, DataFixerSlayer, or RandomPatches\'s data fixer disabler.')
+    // Check if anything might've gone wrong early on.
+    if (newCount == 1 && invokeCount == 1)
+        clazz.fields.add(new FieldNode(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC + Opcodes.ACC_FINAL, 'lazydfu_status', 'Z', null, true))
+    else
+        clazz.fields.add(new FieldNode(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC + Opcodes.ACC_FINAL, 'lazydfu_status', 'Z', null, false))
+
+    return clazz
+}
+
+/**
+ * This function attempts to get the MethodNode specified by the given name in the given ClassNode. If no applicable
+ * MethodNode was found, an error will be thrown declaring so.
+ *
+ * @param clazz The ClassNode to get the MethodNode from.
+ * @param name  The name of the method to get the MethodNode for.
+ * @returns {*} The MethodNode that was found in the ClassNode.
+ */
+function getMethod(clazz, name)
+{
+    for (var index in clazz.methods)
+    {
+        var method = clazz.methods[index]
+        if (method.name.equals(name))
+        {
+            return method
+        }
     }
 
-    return method;
+    throw "DataFixersCoreMod couldn't find method with name '" + name + "' in '" + clazz.name + "'!"
 }
