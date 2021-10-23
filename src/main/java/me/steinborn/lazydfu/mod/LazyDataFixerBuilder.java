@@ -7,7 +7,7 @@ import me.steinborn.lazydfu.LazyDFU;
 import java.util.concurrent.Executor;
 
 /**
- * This version of {@code DataFixerBuilder} does not immediately initialize rules.
+ * This version of {@link DataFixerBuilder} does not immediately initialize rules.
  *
  * @author tuxed
  * @author Jonathing

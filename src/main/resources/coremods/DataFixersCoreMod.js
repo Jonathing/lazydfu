@@ -23,9 +23,10 @@ function initializeCoreMod()
 }
 
 /**
- * This function transforms the createFixer() method in the given class to change all calls of "new DataFixerBuilder()"
- * to "new LazyDataFixerBuilder()". This way, the lazy data fixer is used rather than the original one when it is
- * attempted to be created.
+ * This function mainly transforms the createFixer() method in the given class to change all calls of "new
+ * DataFixerBuilder()" to "new LazyDataFixerBuilder()". This way, the lazy data fixer is used rather than the original
+ * one when it is attempted to be created. In addition, a new field is created in the class which states whether or not
+ * the transformation was successful.
  *
  * @param clazz The DataFixesManager class's bytecode that will be transformed by this coremod.
  * @returns {*} The transformed class.
@@ -89,23 +90,4 @@ function getMethod(clazz, name)
     }
 
     throw "DataFixersCoreMod couldn't find method with name '" + name + "' in '" + clazz.name + "'!"
-}
-
-/**
- * This function logs a message to console. If the ASMAPI.log function exists at runtime, it will use that method. If
- * not, it will use the standard print() method.
- *
- * @param level   The logging level to log to.
- * @param message The message to log to the console.
- */
-function log(level, message)
-{
-    try
-    {
-        ASMAPI.log(level, message)
-    }
-    catch (error)
-    {
-        print(message)
-    }
 }

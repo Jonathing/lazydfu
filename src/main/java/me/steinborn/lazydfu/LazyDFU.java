@@ -16,12 +16,12 @@ import org.apache.logging.log4j.MarkerManager;
 import java.util.ConcurrentModificationException;
 
 /**
- * This is the main class of the LazyDFU mod and it does... well... nothing! It merely exists as a placeholder so that
+ * This is the main class of the LazyDFU mod, and it does... well... nothing! It merely exists as a placeholder so that
  * Forge is able to detect our JAR file and can then load our coremod into the game.
  *
  * @author Jonathing
  * @author CorgiTaco
- * @see me.steinborn.lazydfu.mod.LazyDataFixerBuilder
+ * @see me.steinborn.lazydfu.mod.LazyDataFixerBuilder LazyDataFixerBuilder
  * @since 0.1.3
  */
 @Mod(LazyDFU.MOD_ID)
