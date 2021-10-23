@@ -1,4 +1,4 @@
 {
   "_comment": "FML Warning GUI Message",
-  "lazydfu.gui.message": "LazyDFU did not initialize successfully. Please avoid using mods that modify/kill the DataFixerUpper."
+  "lazydfu.gui.message": "LazyDFU failed to initialize successfully! Please avoid using any mods that might modify or kill the DataFixerUpper."
 }

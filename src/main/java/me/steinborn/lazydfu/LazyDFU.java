@@ -1,7 +1,10 @@
 package me.steinborn.lazydfu;
 
 import net.minecraft.util.datafix.DataFixesManager;
-import net.minecraftforge.fml.*;
+import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.ModLoader;
+import net.minecraftforge.fml.ModLoadingStage;
+import net.minecraftforge.fml.ModLoadingWarning;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -38,6 +41,7 @@ public class LazyDFU
     {
         Marker marker = MarkerManager.getMarker("INIT");
 
+        // Try and get the result of the coremod injection.
         boolean coreModStatus = false;
         try
         {
@@ -50,7 +54,9 @@ public class LazyDFU
         if (!coreModStatus || !isUsingLazyBuilder)
         {
             // Exception message is hard-coded in English just in case.
-            ConcurrentModificationException e = new ConcurrentModificationException("LazyDFU detected that another mod is modifying/killing the DataFixerUpper!");
+            final String reason = (!coreModStatus ? "The LazyDFU CoreMod failed to transform a single instance of DataFixerBuilder!" : "LazyDFU's LazyDataFixerBuilder was not used to create the DataFixerUpper!")
+                    + " Is another mod killing the DataFixerUpper?";
+            Exception e = new ConcurrentModificationException(reason);
 
             // Add a warning to the FML warnings GUI screen
             ModLoader.get().addWarning(new ModLoadingWarning(
@@ -61,7 +67,7 @@ public class LazyDFU
             ));
 
             // Explain what happened in the console
-            LOGGER.fatal(marker, "LazyDFU did not initialize successfully.");
+            LOGGER.fatal(marker, "LazyDFU failed to initialize successfully!");
             LOGGER.fatal(marker, "This is most likely because you have another mod installed that is killing or modifying the DataFixerUpper.");
             LOGGER.fatal(marker, "Please avoid using mods alongside LazyDFU that do this such as DataBreaker, DataFixerSlayer, or RandomPatches's data fixer disabler.");
             LOGGER.fatal(marker, "If you believe you got this message in error, please send an issue to the issue tracker.");
