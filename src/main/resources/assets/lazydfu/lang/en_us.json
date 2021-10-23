@@ -1,4 +1,3 @@
 {
-  "lazydfu.warning.message": "LazyDFU did not initialize successfully. See the console log for more information.",
-  "lazydfu.warning.exception": "LazyDFU detected that another mod is modifying the DataFixerUpper!"
+  "lazydfu.warning.message": "LazyDFU did not initialize successfully. See the console log for more information."
 }

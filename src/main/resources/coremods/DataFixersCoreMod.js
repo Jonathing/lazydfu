@@ -1,6 +1,7 @@
 // class imports
 var ASMAPI = Java.type('net.minecraftforge.coremod.api.ASMAPI')
 var Opcodes = Java.type('org.objectweb.asm.Opcodes')
+var FieldNode = Java.type('org.objectweb.asm.tree.FieldNode')
 
 /**
  * The DataFixersCoreMod coremod hooks into the DataFixesManager class and injects the ASM bytecode presented in the
@@ -61,22 +62,9 @@ function createFixer(clazz)
 
     // Check if anything might've gone wrong early on.
     if (newCount == 1 && invokeCount == 1)
-    {
-        log('INFO', '[LazyDFU] LazyDFU was initialized successfully.')
-    }
-    else if (newCount == 0 || invokeCount == 0)
-    {
-        log('FATAL', '[LazyDFU] LazyDFU seems to have been initialized successfully, but something seems off.')
-        log('FATAL', '[LazyDFU] Any variable trying to create a normal DataFixerBuilder did not exist at the time of method transformation.')
-        log('FATAL', '[LazyDFU] This usually means another mod is trying to kill or modify the data fixer initialization system.')
-        log('FATAL', '[LazyDFU] Please avoid using mods alongside LazyDFU that do this such as DataBreaker, DataFixerSlayer, or RandomPatches\'s data fixer disabler.')
-    }
+        clazz.fields.add(new FieldNode(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC + Opcodes.ACC_FINAL, 'lazydfu_status', 'Z', null, true))
     else
-    {
-        log('FATAL', '[LazyDFU] LazyDFU seems to have been initialized successfully, but something seems off.')
-        log('FATAL', '[LazyDFU] It seems like more than one DataFixerBuilder was transformed in the method, which should be impossible.')
-        log('FATAL', '[LazyDFU] In any case, please avoid using mods alongside LazyDFU that do this such as DataBreaker, DataFixerSlayer, or RandomPatches\'s data fixer disabler.')
-    }
+        clazz.fields.add(new FieldNode(Opcodes.ACC_PUBLIC + Opcodes.ACC_STATIC + Opcodes.ACC_FINAL, 'lazydfu_status', 'Z', null, false))
 
     return clazz
 }
