@@ -1,10 +1,7 @@
 package me.steinborn.lazydfu;
 
 import net.minecraft.util.datafix.DataFixesManager;
-import net.minecraftforge.fml.ModList;
-import net.minecraftforge.fml.ModLoader;
-import net.minecraftforge.fml.ModLoadingStage;
-import net.minecraftforge.fml.ModLoadingWarning;
+import net.minecraftforge.fml.*;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -52,15 +49,18 @@ public class LazyDFU
 
         if (!coreModStatus || !isUsingLazyBuilder)
         {
+            // Exception message is hard-coded in English just in case.
             ConcurrentModificationException e = new ConcurrentModificationException("LazyDFU detected that another mod is modifying/killing the DataFixerUpper!");
 
+            // Add a warning to the FML warnings GUI screen
             ModLoader.get().addWarning(new ModLoadingWarning(
                     ModList.get().getModContainerById(LazyDFU.MOD_ID).get().getModInfo(),
                     ModLoadingStage.COMMON_SETUP,
-                    "lazydfu.warning.message",
+                    "lazydfu.gui.message",
                     e.getMessage(), e.getClass().getSimpleName()
             ));
 
+            // Explain what happened in the console
             LOGGER.fatal(marker, "LazyDFU did not initialize successfully.");
             LOGGER.fatal(marker, "This is most likely because you have another mod installed that is killing or modifying the DataFixerUpper.");
             LOGGER.fatal(marker, "Please avoid using mods alongside LazyDFU that do this such as DataBreaker, DataFixerSlayer, or RandomPatches's data fixer disabler.");
