@@ -1,80 +1,93 @@
 {
   "homepage": "https://github.com/Jonathing/lazydfu/releases",
   "promos": {
-    "1.13.2-latest": "1.0.1",
-    "1.13.2-recommended": "1.0.1",
-    "1.14.2-latest": "1.0.1",
-    "1.14.2-recommended": "1.0.1",
-    "1.14.3-latest": "1.0.1",
-    "1.14.3-recommended": "1.0.1",
-    "1.14.4-latest": "1.0.1",
-    "1.14.4-recommended": "1.0.1",
-    "1.15-latest": "1.0.1",
-    "1.15-recommended": "1.0.1",
-    "1.15.1-latest": "1.0.1",
-    "1.15.1-recommended": "1.0.1",
-    "1.15.2-latest": "1.0.1",
-    "1.15.2-recommended": "1.0.1",
-    "1.16.1-latest": "1.0.1",
-    "1.16.1-recommended": "1.0.1",
-    "1.16.2-latest": "1.0.1",
-    "1.16.2-recommended": "1.0.1",
-    "1.16.3-latest": "1.0.1",
-    "1.16.3-recommended": "1.0.1",
-    "1.16.4-latest": "1.0.1",
-    "1.16.4-recommended": "1.0.1",
-    "1.16.5-latest": "1.0.1",
-    "1.16.5-recommended": "1.0.1",
-    "1.17.1-latest": "1.0.1",
-    "1.17.1-recommended": "1.0.1"
+    "1.13.2-latest": "1.1.0",
+    "1.13.2-recommended": "1.1.0",
+    "1.14.2-latest": "1.1.0",
+    "1.14.2-recommended": "1.1.0",
+    "1.14.3-latest": "1.1.0",
+    "1.14.3-recommended": "1.1.0",
+    "1.14.4-latest": "1.1.0",
+    "1.14.4-recommended": "1.1.0",
+    "1.15-latest": "1.1.0",
+    "1.15-recommended": "1.1.0",
+    "1.15.1-latest": "1.1.0",
+    "1.15.1-recommended": "1.1.0",
+    "1.15.2-latest": "1.1.0",
+    "1.15.2-recommended": "1.1.0",
+    "1.16.1-latest": "1.1.0",
+    "1.16.1-recommended": "1.1.0",
+    "1.16.2-latest": "1.1.0",
+    "1.16.2-recommended": "1.1.0",
+    "1.16.3-latest": "1.1.0",
+    "1.16.3-recommended": "1.1.0",
+    "1.16.4-latest": "1.1.0",
+    "1.16.4-recommended": "1.1.0",
+    "1.16.5-latest": "1.1.0",
+    "1.16.5-recommended": "1.1.0",
+    "1.17.1-latest": "1.1.0",
+    "1.17.1-recommended": "1.1.0"
   },
   "1.13.2": {
-    "1.0.1": "1.0.1 for Minecraft 1.13.2 - 1.14.2\n- Initial release for Minecraft 1.13.2 - 1.14.2."
+    "1.0.1": "1.0.1 for Minecraft 1.13.2 - 1.14.2\n- Initial release for Minecraft 1.13.2 - 1.14.2.",
+    "1.1.0": "1.1.0 for Minecraft 1.13.2 - 1.16.5\n- The JavaScript CoreMod file has been cleaned up and is easier to read for anyone interested in studying it.\n- The check if a mod is modifying/killing the DataFixerUpper has been fine-tuned and happens mostly in the mod itself.\n- The mod now checks for updates.\n- A minimum Forge version of 25.0.198 is now enforced."
   },
   "1.14.2": {
-    "1.0.1": "1.0.1 for Minecraft 1.13.2 - 1.14.2\n- Initial release for Minecraft 1.13.2 - 1.14.2."
+    "1.0.1": "1.0.1 for Minecraft 1.13.2 - 1.14.2\n- Initial release for Minecraft 1.13.2 - 1.14.2.",
+    "1.1.0": "1.1.0 for Minecraft 1.13.2 - 1.16.5\n- The JavaScript CoreMod file has been cleaned up and is easier to read for anyone interested in studying it.\n- The check if a mod is modifying/killing the DataFixerUpper has been fine-tuned and happens mostly in the mod itself.\n- The mod now checks for updates.\n- A minimum Forge version of 25.0.198 is now enforced."
   },
   "1.14.3": {
-    "1.0.1": "1.0.1 for Minecraft 1.14.3\n- Initial release for Minecraft 1.14.3."
+    "1.0.1": "1.0.1 for Minecraft 1.14.3\n- Initial release for Minecraft 1.14.3.",
+    "1.1.0": "1.1.0 for Minecraft 1.13.2 - 1.16.5\n- The JavaScript CoreMod file has been cleaned up and is easier to read for anyone interested in studying it.\n- The check if a mod is modifying/killing the DataFixerUpper has been fine-tuned and happens mostly in the mod itself.\n- The mod now checks for updates.\n- A minimum Forge version of 25.0.198 is now enforced."
   },
   "1.14.4": {
-    "1.0.0": "1.0.0 for Minecraft 1.14.4 - 1.16.5\n- Initial release from fork of CorgiTaco's fork.\n- Instead of using a Mixin, LazyDFU now uses a single coremod which is injected directly at startup.\n- Added a safety check to log if other mods might kill the data fixer.\n- Cleaned up the `mods.toml` just a tad.",
-    "1.0.1": "1.0.1 for Minecraft 1.14.4 - 1.16.5\n- A minimum Forge version of 25.0.198 is now enforced."
+    "1.0.0": "1.0.0 for Minecraft 1.14.4 - 1.16.5\n- Initial release from fork of CorgiTaco's fork.\n- Instead of using a Mixin, LazyDFU now uses a single coremod which is injected directly at startup.\n- Added a safety check to log if other mods might kill the data fixer.\n- Cleaned up the mods.toml just a tad.",
+    "1.0.1": "1.0.1 for Minecraft 1.14.4 - 1.16.5\n- A minimum Forge version of 28.0.75 is now enforced.",
+    "1.1.0": "1.1.0 for Minecraft 1.13.2 - 1.16.5\n- The JavaScript CoreMod file has been cleaned up and is easier to read for anyone interested in studying it.\n- The check if a mod is modifying/killing the DataFixerUpper has been fine-tuned and happens mostly in the mod itself.\n- The mod now checks for updates.\n- A minimum Forge version of 25.0.198 is now enforced."
   },
   "1.15": {
-    "1.0.0": "1.0.0 for Minecraft 1.14.4 - 1.16.5\n- Initial release from fork of CorgiTaco's fork.\n- Instead of using a Mixin, LazyDFU now uses a single coremod which is injected directly at startup.\n- Added a safety check to log if other mods might kill the data fixer.\n- Cleaned up the `mods.toml` just a tad.",
-    "1.0.1": "1.0.1 for Minecraft 1.14.4 - 1.16.5\n- A minimum Forge version of 25.0.198 is now enforced."
+    "1.0.0": "1.0.0 for Minecraft 1.14.4 - 1.16.5\n- Initial release from fork of CorgiTaco's fork.\n- Instead of using a Mixin, LazyDFU now uses a single coremod which is injected directly at startup.\n- Added a safety check to log if other mods might kill the data fixer.\n- Cleaned up the mods.toml just a tad.",
+    "1.0.1": "1.0.1 for Minecraft 1.14.4 - 1.16.5\n- A minimum Forge version of 28.0.75 is now enforced.",
+    "1.1.0": "1.1.0 for Minecraft 1.13.2 - 1.16.5\n- The JavaScript CoreMod file has been cleaned up and is easier to read for anyone interested in studying it.\n- The check if a mod is modifying/killing the DataFixerUpper has been fine-tuned and happens mostly in the mod itself.\n- The mod now checks for updates.\n- A minimum Forge version of 25.0.198 is now enforced."
   },
   "1.15.1": {
-    "1.0.0": "1.0.0 for Minecraft 1.14.4 - 1.16.5\n- Initial release from fork of CorgiTaco's fork.\n- Instead of using a Mixin, LazyDFU now uses a single coremod which is injected directly at startup.\n- Added a safety check to log if other mods might kill the data fixer.\n- Cleaned up the `mods.toml` just a tad.",
-    "1.0.1": "1.0.1 for Minecraft 1.14.4 - 1.16.5\n- A minimum Forge version of 25.0.198 is now enforced."
+    "1.0.0": "1.0.0 for Minecraft 1.14.4 - 1.16.5\n- Initial release from fork of CorgiTaco's fork.\n- Instead of using a Mixin, LazyDFU now uses a single coremod which is injected directly at startup.\n- Added a safety check to log if other mods might kill the data fixer.\n- Cleaned up the mods.toml just a tad.",
+    "1.0.1": "1.0.1 for Minecraft 1.14.4 - 1.16.5\n- A minimum Forge version of 28.0.75 is now enforced.",
+    "1.1.0": "1.1.0 for Minecraft 1.13.2 - 1.16.5\n- The JavaScript CoreMod file has been cleaned up and is easier to read for anyone interested in studying it.\n- The check if a mod is modifying/killing the DataFixerUpper has been fine-tuned and happens mostly in the mod itself.\n- The mod now checks for updates.\n- A minimum Forge version of 25.0.198 is now enforced."
   },
   "1.15.2": {
-    "1.0.0": "1.0.0 for Minecraft 1.14.4 - 1.16.5\n- Initial release from fork of CorgiTaco's fork.\n- Instead of using a Mixin, LazyDFU now uses a single coremod which is injected directly at startup.\n- Added a safety check to log if other mods might kill the data fixer.\n- Cleaned up the `mods.toml` just a tad.",
-    "1.0.1": "1.0.1 for Minecraft 1.14.4 - 1.16.5\n- A minimum Forge version of 25.0.198 is now enforced."
+    "1.0.0": "1.0.0 for Minecraft 1.14.4 - 1.16.5\n- Initial release from fork of CorgiTaco's fork.\n- Instead of using a Mixin, LazyDFU now uses a single coremod which is injected directly at startup.\n- Added a safety check to log if other mods might kill the data fixer.\n- Cleaned up the mods.toml just a tad.",
+    "1.0.1": "1.0.1 for Minecraft 1.14.4 - 1.16.5\n- A minimum Forge version of 28.0.75 is now enforced.",
+    "1.1.0": "1.1.0 for Minecraft 1.13.2 - 1.16.5\n- The JavaScript CoreMod file has been cleaned up and is easier to read for anyone interested in studying it.\n- The check if a mod is modifying/killing the DataFixerUpper has been fine-tuned and happens mostly in the mod itself.\n- The mod now checks for updates.\n- A minimum Forge version of 25.0.198 is now enforced."
   },
   "1.16.1": {
-    "1.0.0": "1.0.0 for Minecraft 1.14.4 - 1.16.5\n- Initial release from fork of CorgiTaco's fork.\n- Instead of using a Mixin, LazyDFU now uses a single coremod which is injected directly at startup.\n- Added a safety check to log if other mods might kill the data fixer.\n- Cleaned up the `mods.toml` just a tad.",
-    "1.0.1": "1.0.1 for Minecraft 1.14.4 - 1.16.5\n- A minimum Forge version of 25.0.198 is now enforced."
+    "1.0.0": "1.0.0 for Minecraft 1.14.4 - 1.16.5\n- Initial release from fork of CorgiTaco's fork.\n- Instead of using a Mixin, LazyDFU now uses a single coremod which is injected directly at startup.\n- Added a safety check to log if other mods might kill the data fixer.\n- Cleaned up the mods.toml just a tad.",
+    "1.0.1": "1.0.1 for Minecraft 1.14.4 - 1.16.5\n- A minimum Forge version of 28.0.75 is now enforced.",
+    "1.1.0": "1.1.0 for Minecraft 1.13.2 - 1.16.5\n- The JavaScript CoreMod file has been cleaned up and is easier to read for anyone interested in studying it.\n- The check if a mod is modifying/killing the DataFixerUpper has been fine-tuned and happens mostly in the mod itself.\n- The mod now checks for updates.\n- A minimum Forge version of 25.0.198 is now enforced."
   },
   "1.16.2": {
-    "1.0.0": "1.0.0 for Minecraft 1.14.4 - 1.16.5\n- Initial release from fork of CorgiTaco's fork.\n- Instead of using a Mixin, LazyDFU now uses a single coremod which is injected directly at startup.\n- Added a safety check to log if other mods might kill the data fixer.\n- Cleaned up the `mods.toml` just a tad.",
-    "1.0.1": "1.0.1 for Minecraft 1.14.4 - 1.16.5\n- A minimum Forge version of 25.0.198 is now enforced."
+    "1.0.0": "1.0.0 for Minecraft 1.14.4 - 1.16.5\n- Initial release from fork of CorgiTaco's fork.\n- Instead of using a Mixin, LazyDFU now uses a single coremod which is injected directly at startup.\n- Added a safety check to log if other mods might kill the data fixer.\n- Cleaned up the mods.toml just a tad.",
+    "1.0.1": "1.0.1 for Minecraft 1.14.4 - 1.16.5\n- A minimum Forge version of 28.0.75 is now enforced.",
+    "1.1.0": "1.1.0 for Minecraft 1.13.2 - 1.16.5\n- The JavaScript CoreMod file has been cleaned up and is easier to read for anyone interested in studying it.\n- The check if a mod is modifying/killing the DataFixerUpper has been fine-tuned and happens mostly in the mod itself.\n- The mod now checks for updates.\n- A minimum Forge version of 25.0.198 is now enforced."
   },
   "1.16.3": {
-    "1.0.0": "1.0.0 for Minecraft 1.14.4 - 1.16.5\n- Initial release from fork of CorgiTaco's fork.\n- Instead of using a Mixin, LazyDFU now uses a single coremod which is injected directly at startup.\n- Added a safety check to log if other mods might kill the data fixer.\n- Cleaned up the `mods.toml` just a tad.",
-    "1.0.1": "1.0.1 for Minecraft 1.14.4 - 1.16.5\n- A minimum Forge version of 25.0.198 is now enforced."
+    "1.0.0": "1.0.0 for Minecraft 1.14.4 - 1.16.5\n- Initial release from fork of CorgiTaco's fork.\n- Instead of using a Mixin, LazyDFU now uses a single coremod which is injected directly at startup.\n- Added a safety check to log if other mods might kill the data fixer.\n- Cleaned up the mods.toml just a tad.",
+    "1.0.1": "1.0.1 for Minecraft 1.14.4 - 1.16.5\n- A minimum Forge version of 28.0.75 is now enforced.",
+    "1.1.0": "1.1.0 for Minecraft 1.13.2 - 1.16.5\n- The JavaScript CoreMod file has been cleaned up and is easier to read for anyone interested in studying it.\n- The check if a mod is modifying/killing the DataFixerUpper has been fine-tuned and happens mostly in the mod itself.\n- The mod now checks for updates.\n- A minimum Forge version of 25.0.198 is now enforced."
   },
   "1.16.4": {
-    "1.0.0": "1.0.0 for Minecraft 1.14.4 - 1.16.5\n- Initial release from fork of CorgiTaco's fork.\n- Instead of using a Mixin, LazyDFU now uses a single coremod which is injected directly at startup.\n- Added a safety check to log if other mods might kill the data fixer.\n- Cleaned up the `mods.toml` just a tad.",
-    "1.0.1": "1.0.1 for Minecraft 1.14.4 - 1.16.5\n- A minimum Forge version of 25.0.198 is now enforced."
+    "1.0.0": "1.0.0 for Minecraft 1.14.4 - 1.16.5\n- Initial release from fork of CorgiTaco's fork.\n- Instead of using a Mixin, LazyDFU now uses a single coremod which is injected directly at startup.\n- Added a safety check to log if other mods might kill the data fixer.\n- Cleaned up the mods.toml just a tad.",
+    "1.0.1": "1.0.1 for Minecraft 1.14.4 - 1.16.5\n- A minimum Forge version of 28.0.75 is now enforced.",
+    "1.1.0": "1.1.0 for Minecraft 1.13.2 - 1.16.5\n- The JavaScript CoreMod file has been cleaned up and is easier to read for anyone interested in studying it.\n- The check if a mod is modifying/killing the DataFixerUpper has been fine-tuned and happens mostly in the mod itself.\n- The mod now checks for updates.\n- A minimum Forge version of 25.0.198 is now enforced."
   },
   "1.16.5": {
-    "1.0.0": "1.0.0 for Minecraft 1.14.4 - 1.16.5\n- Initial release from fork of CorgiTaco's fork.\n- Instead of using a Mixin, LazyDFU now uses a single coremod which is injected directly at startup.\n- Added a safety check to log if other mods might kill the data fixer.\n- Cleaned up the `mods.toml` just a tad.",
-    "1.0.1": "1.0.1 for Minecraft 1.14.4 - 1.16.5\n- A minimum Forge version of 25.0.198 is now enforced."
+    "1.0.0": "1.0.0 for Minecraft 1.14.4 - 1.16.5\n- Initial release from fork of CorgiTaco's fork.\n- Instead of using a Mixin, LazyDFU now uses a single coremod which is injected directly at startup.\n- Added a safety check to log if other mods might kill the data fixer.\n- Cleaned up the mods.toml just a tad.",
+    "1.0.1": "1.0.1 for Minecraft 1.14.4 - 1.16.5\n- A minimum Forge version of 28.0.75 is now enforced.",
+    "1.1.0": "1.1.0 for Minecraft 1.13.2 - 1.16.5\n- The JavaScript CoreMod file has been cleaned up and is easier to read for anyone interested in studying it.\n- The check if a mod is modifying/killing the DataFixerUpper has been fine-tuned and happens mostly in the mod itself.\n- The mod now checks for updates.\n- A minimum Forge version of 25.0.198 is now enforced."
   },
   "1.17.1": {
-    "1.0.0": "1.0.0 for Minecraft 1.17.1+\n- Initial release from fork of CorgiTaco's fork.\n- Instead of using a Mixin, LazyDFU now uses a single coremod which is injected directly at startup.\n- Added a safety check to log if other mods might kill the data fixer.\n- Cleaned up the `mods.toml` just a tad.\n- Added compatibility with FMLOnly.",
-    "1.0.1": "1.0.1 for Minecraft 1.17.1+\n- A minimum Minecraft version of 1.17.1 is now enforced."
+    "1.0.0": "1.0.0 for Minecraft 1.17.1+\n- Initial release from fork of CorgiTaco's fork.\n- Instead of using a Mixin, LazyDFU now uses a single coremod which is injected directly at startup.\n- Added a safety check to log if other mods might kill the data fixer.\n- Cleaned up the mods.toml just a tad.\n- Added compatibility with FMLOnly.",
+    "1.0.1": "1.0.1 for Minecraft 1.17.1+\n- A minimum Minecraft version of 1.17.1 is now enforced.",
+    "1.1.0": "1.1.0 for Minecraft 1.17.1+\n- The JavaScript CoreMod file has been cleaned up and is easier to read for anyone interested in studying it.\n- The 1.17.1 CoreMod now uses the transformer logic from the 1.13.2 - 1.16.5 version.\n- The check if a mod is modifying/killing the DataFixerUpper has been fine-tuned and happens mostly in the mod itself.\n- The mod now checks for updates."
   }
 }
